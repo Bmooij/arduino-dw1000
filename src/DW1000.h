@@ -168,7 +168,7 @@ public:
 	static void setDeviceAddress(uint16_t val);
 	// TODO MAC and filters
 	
-	static void setEUI(char eui[]);
+	static void setEUI(const char eui[]);
 	static void setEUI(byte eui[]);
 	
 	/* ##### General device configuration ######################################## */
@@ -345,8 +345,8 @@ public:
 	static void getPrettyBytes(byte data[], char msgBuffer[], uint16_t n);
 	
 	//convert from char to 4 bits (hexadecimal)
-	static uint8_t nibbleFromChar(char c);
-	static void convertToByte(char string[], byte* eui_byte);
+	static uint8_t nibbleFromChar(const char c);
+	static void convertToByte(const char string[], byte* eui_byte);
 	
 	// host-initiated reading of temperature and battery voltage
 	static void getTempAndVbat(float& temp, float& vbat);

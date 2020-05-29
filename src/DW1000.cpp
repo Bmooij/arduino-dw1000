@@ -884,7 +884,7 @@ void DW1000Class::setDeviceAddress(uint16_t val) {
 	_networkAndAddress[1] = (byte)((val >> 8) & 0xFF);
 }
 
-uint8_t DW1000Class::nibbleFromChar(char c) {
+uint8_t DW1000Class::nibbleFromChar(const char c) {
 	if(c >= '0' && c <= '9') {
 		return c-'0';
 	}
@@ -897,7 +897,7 @@ uint8_t DW1000Class::nibbleFromChar(char c) {
 	return 255;
 }
 
-void DW1000Class::convertToByte(char string[], byte* bytes) {
+void DW1000Class::convertToByte(const char string[], byte* bytes) {
 	byte    eui_byte[LEN_EUI];
 	// we fill it with the char array under the form of "AA:FF:1C:...."
 	for(uint16_t i = 0; i < LEN_EUI; i++) {
@@ -921,7 +921,7 @@ void DW1000Class::getTempAndVbat(float& temp, float& vbat) {
 	temp = (sar_ltemp - _tmeas23C) * 1.14f + 23.0f;
 }
 
-void DW1000Class::setEUI(char eui[]) {
+void DW1000Class::setEUI(const char eui[]) {
 	byte eui_byte[LEN_EUI];
 	convertToByte(eui, eui_byte);
 	setEUI(eui_byte);
