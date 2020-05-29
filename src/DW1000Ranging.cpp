@@ -80,7 +80,7 @@ uint16_t  DW1000RangingClass::_timerDelay;
 uint16_t  DW1000RangingClass::_successRangingCount = 0;
 uint32_t  DW1000RangingClass::_rangingCountPeriod  = 0;
 //Here our handlers
-void (* DW1000RangingClass::_handleNewRange)(void) = 0;
+void (* DW1000RangingClass::_handleNewRange)(DW1000Device*) = 0;
 void (* DW1000RangingClass::_handleBlinkDevice)(DW1000Device*) = 0;
 void (* DW1000RangingClass::_handleNewDevice)(DW1000Device*) = 0;
 void (* DW1000RangingClass::_handleInactiveDevice)(DW1000Device*) = 0;
@@ -159,7 +159,7 @@ void DW1000RangingClass::generalStart() {
 }
 
 
-void DW1000RangingClass::startAsAnchor(char address[], const byte mode[], const bool randomShortAddress) {
+void DW1000RangingClass::startAsAnchor(const char address[], const byte mode[], const bool randomShortAddress) {
 	//save the address
 	DW1000.convertToByte(address, _currentAddress);
 	//write the address on the DW1000 chip
@@ -606,7 +606,7 @@ void DW1000RangingClass::loop() {
 								//we have finished our range computation. We send the corresponding handler
 								_lastDistantDevice = myDistantDevice->getIndex();
 								if(_handleNewRange != 0) {
-									(*_handleNewRange)();
+									(*_handleNewRange)(myDistantDevice);
 								}
 								
 							}
@@ -667,7 +667,7 @@ void DW1000RangingClass::loop() {
 					//we have finished our range computation. We send the corresponding handler
 					_lastDistantDevice = myDistantDevice->getIndex();
 					if(_handleNewRange != 0) {
-						(*_handleNewRange)();
+						(*_handleNewRange)(myDistantDevice);
 					}
 				}
 				else if(messageType == RANGE_FAILED) {

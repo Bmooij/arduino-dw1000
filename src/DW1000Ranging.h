@@ -81,7 +81,7 @@ public:
 	static void    initCommunication(uint8_t myRST = DEFAULT_RST_PIN, uint8_t mySS = DEFAULT_SPI_SS_PIN, uint8_t myIRQ = 2);
 	static void    configureNetwork(uint16_t deviceAddress, uint16_t networkId, const byte mode[]);
 	static void    generalStart();
-	static void    startAsAnchor(char address[], const byte mode[], const bool randomShortAddress = true);
+	static void    startAsAnchor(const char address[], const byte mode[], const bool randomShortAddress = true);
 	static void    startAsTag(char address[], const byte mode[], const bool randomShortAddress = true);
 	static boolean addNetworkDevices(DW1000Device* device, boolean shortAddress);
 	static boolean addNetworkDevices(DW1000Device* device);
@@ -106,7 +106,7 @@ public:
 	static void setRangeFilterValue(uint16_t newValue);
 	
 	//Handlers:
-	static void attachNewRange(void (* handleNewRange)(void)) { _handleNewRange = handleNewRange; };
+	static void attachNewRange(void (* handleNewRange)(DW1000Device*)) { _handleNewRange = handleNewRange; };
 	
 	static void attachBlinkDevice(void (* handleBlinkDevice)(DW1000Device*)) { _handleBlinkDevice = handleBlinkDevice; };
 	
@@ -136,7 +136,7 @@ private:
 	static int16_t      counterForBlink;
 	
 	//Handlers:
-	static void (* _handleNewRange)(void);
+	static void (* _handleNewRange)(DW1000Device*);
 	static void (* _handleBlinkDevice)(DW1000Device*);
 	static void (* _handleNewDevice)(DW1000Device*);
 	static void (* _handleInactiveDevice)(DW1000Device*);
